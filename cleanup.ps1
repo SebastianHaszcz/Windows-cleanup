@@ -1,7 +1,16 @@
+param(
+    # Text file with one server name per line
+    [string]$ServerListPath = "C:\Scripts\ServersList.txt"
+)
+
 # --- 1. Path Configuration ---
-# Where to find the list of servers and where to save the logs
-$ServerListPath = "C:\Scripts\ServersList.txt"
+# Where to save the logs
 $LogDirectory   = "C:\Scripts\Logs"
+
+if (-not (Test-Path -Path $ServerListPath -PathType Leaf)) {
+    Write-Host "Server list not found: $ServerListPath" -ForegroundColor Red
+    exit 1
+}
 
 # Create the logs folder if it doesn't exist yet
 if (-not (Test-Path $LogDirectory)) {
